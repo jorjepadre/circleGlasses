@@ -2,17 +2,30 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    gui.setup();
+    gui.add(lowThresholdEdge.setup("Edge Threshold", 50, 0, 100));
     webcamGrabber.setup(640, 640);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     webcamGrabber.update();
+    if(webcamGrabber.isFrameNew()){
+        ofPixels pixs = webcamGrabber.getPixels();
+        webcamGrabberFrame.setFromPixels(pixs);
+        webcamGrabberFrameMat = toCv(webcamGrabberFrame);
+        cvtColor(webcamGrabberFrameMat, webcamGrabberFrameMatGray, CV_BGR2GRAY);
+        GaussianBlur(webcamGrabberFrameMatGray, webcamGrabberFrameMatGray, 3);
+        Canny(webcamGrabberFrameMatGray, webcamGrabberFrameMatEdge, lowThresholdEdge, lowThresholdEdge*3);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     webcamGrabber.draw(0, 0, ofGetWidth(), ofGetHeight());
+//    ofSetColor(255, 255, 255);
+    drawMat(webcamGrabberFrameMatEdge, 0, 0, ofGetWidth(), ofGetHeight());
+    gui.draw();
 }
 
 //--------------------------------------------------------------

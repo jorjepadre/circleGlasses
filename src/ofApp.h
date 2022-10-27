@@ -1,6 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOpenCv.h"
+#include "ofxCv.h"
+#include "ofxGui.h"
+
+using namespace ofxCv;
+using namespace cv;
 
 class ofApp : public ofBaseApp{
 
@@ -22,6 +28,13 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     ofVideoGrabber webcamGrabber;
+    ofImage webcamGrabberFrame;
+    Mat webcamGrabberFrameMat;
+    Mat webcamGrabberFrameMatGray;
+    Mat webcamGrabberFrameMatEdge;
+    
+    ofxPanel gui;
+    ofxIntSlider lowThresholdEdge;
     
 		
 };
