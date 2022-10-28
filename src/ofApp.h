@@ -33,6 +33,8 @@ class ofApp : public ofBaseApp{
     Mat webcamGrabberFrameMatGray;
     Mat webcamGrabberFrameMatEdge;
     
+    vector<Vec3f> circles;
+    
     ofxPanel gui;
     ofxIntSlider lowThresholdEdge;
     
